@@ -30,7 +30,7 @@ namespace SVTradePartnerViewer
             build = $" (dev-{date:yyyyMMdd})";
 #endif
             var v = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version!;
-            CachedText = "SVTradePartnerViewer v" + v.Major + "." + v.Minor + "." + v.Build + build;
+            CachedText = "朱紫交易对象查询器 v" + v.Major + "." + v.Minor + "." + v.Build + build;
             Text = CachedText;
 
             InitializeComponent();
@@ -93,7 +93,7 @@ namespace SVTradePartnerViewer
         private void CopyOutputToClipboard(bool IsPS = false)
         {
             string n = Environment.NewLine;
-            string OutString = IsPS ? $"{OutOT.Text}\t{OutTID.Text.Split("-")[1]}\t{OutNID.Text}" : $"OT: {OutOT.Text}{n}ID: {OutTID.Text}{n}Version: {OutVersion.Text}{n}NID: {OutNID.Text}";
+            string OutString = IsPS ? $"{OutOT.Text}\t{OutTID.Text.Split("-")[1]}\t{OutNID.Text}" : $"名称: {OutOT.Text}{n}性别: {OutGender.Text}{n}表里ID: {OutTID.Text}{n}游戏语言: {OutLanguage.Text}{n}游戏版本: {OutVersion.Text}";
             Clipboard.SetText(OutString);
         }
 
@@ -104,36 +104,35 @@ namespace SVTradePartnerViewer
             {
                 try
                 {
-                    Text = CachedText + " | Connecting...";
+                    textLog.Text = CachedText + "正在连接...";
                     var NewText = CachedText;
                     SwitchConnection.Connect();
                     string id = await GetGameID(CancellationToken.None);
+                    textLog.Text = "正在识别主机训练家数据...";
+                    var sav = await IdentifyTrainer(CancellationToken.None);
+                    OT = sav.OT;
+                    DisplayTID = sav.DisplayTID;
+                    DisplaySID = sav.DisplaySID;
                     if (id is ScarletID)
                     {
-                        Text = CachedText + " | Connected to Scarlet";
-                        NewText = CachedText + " - Sc";
+                        Text = CachedText + $" | {OT} ({DisplayTID:D6})已连接-游戏版本：朱";
+                        NewText = CachedText + " - 朱";
                     }
                     else if (id is VioletID)
                     {
-                        Text = CachedText + " | Connected to Violet";
-                        NewText = CachedText + " - Vi";
+                        Text = CachedText + $" | {OT} ({DisplayTID:D6})已连接-游戏版本：紫";
+                        NewText = CachedText + " - 紫";
                     }
                     else
                     {
-                        MessageBox.Show("Unable to detect Pok閙on Scarlet or Pok閙on Violet running on your switch!");
+                        MessageBox.Show("没有检测到Switch上正在运行宝可梦朱紫!");
                         SwitchConnection.Disconnect();
                     }
 
                     if (SwitchConnection.Connected)
                     {
-                        Text = NewText + " | Identifying host trainer data...";
-                        var sav = await IdentifyTrainer(CancellationToken.None);
-                        OT = sav.OT;
-                        DisplayTID = sav.DisplayTID;
-                        DisplaySID = sav.DisplaySID;
-
-                        NewText += $" | Connected to {OT} ({DisplayTID:D6})";
-                        Text = NewText + " | Reading trade partner info...";
+                        NewText += $" | 连接到 {OT} ({DisplayTID:D6})";
+                        textLog.Text = "正在读取交易对象信息...";
 
                         while (!Stop && SwitchConnection.Connected)
                         {
@@ -151,26 +150,28 @@ namespace SVTradePartnerViewer
 
                             OutOT.Text = trader.OT;
                             OutTID.Text = $"({trader.DisplaySID:D4})-{trader.DisplayTID:D6}";
-                            OutVersion.Text = $"{(trader.Game <= 50 ? "Scarlet" : "Violet")}";
+                            OutVersion.Text = $"{(trader.Game <= 51 ? "朱" : "紫")}";
                             OutNID.Text = $"{NID:X16}";
+                            OutGender.Text = $"{(trader.Gender == 0 ? "男" : "女")}";
+                            OutLanguage.Text = $"{(trader.Language == 10 ? "CHT" : trader.Language == 9 ? "CHS" : trader.Language == 8 ? "KOR" : trader.Language == 7 ? "ESP" : trader.Language == 5 ? "GER" : trader.Language == 4 ? "ITA" : trader.Language == 3 ? "FRE" : trader.Language == 2 ? "ENG" : trader.Language == 1 ? "JPN" : "未知")}";
 
                             if (CheckAutoCopy.Checked) CopyOutputToClipboard(CheckPSWiFi.Checked);
 
                             await ClearTradePartnerNID(TradePartnerNIDOffset, CancellationToken.None);
                         }
 
-                        Text = CachedText + $" | Disconnected from {OT} ({DisplayTID:D6})";
+                        textLog.Text = $"{OT} ({DisplayTID:D6}) 已断开连接!";
                         if (SwitchConnection.Connected) SwitchConnection.Disconnect();
                     }
 
                 }
                 catch (SocketException err)
                 {
-                    Text = CachedText + " | Failed to connect!";
+                    textLog.Text = "连接失败!";
                     if (SwitchConnection.Connected) await SwitchConnection.SendAsync(SwitchCommand.DetachController(true), CancellationToken.None).ConfigureAwait(false);
                     SwitchConnection.Disconnect();
                     // a bit hacky but it works
-                    if (err.Message.Contains("failed to respond") || err.Message.Contains("actively refused"))
+                    if (err.Message.Contains("未能响应") || err.Message.Contains("主动拒绝"))
                     {
                         MessageBox.Show(err.Message);
                     }
@@ -186,7 +187,7 @@ namespace SVTradePartnerViewer
             // Check title so we can warn if mode is incorrect.
             string title = await SwitchConnection.GetTitleID(token).ConfigureAwait(false);
             if (title is not (ScarletID or VioletID))
-                throw new Exception($"{title} is not a valid SV title. Is your mode correct?");
+                throw new Exception($"{title}不是朱紫版本. 你确定打开了宝可梦朱紫吗?");
 
             return await GetFakeTrainerSAV(token).ConfigureAwait(false);
         }
