@@ -93,7 +93,7 @@ namespace SVTradePartnerViewer
         private void CopyOutputToClipboard(bool IsPS = false)
         {
             string n = Environment.NewLine;
-            string OutString = IsPS ? $"{OutOT.Text}\t{OutTID.Text.Split("-")[1]}\t{OutNID.Text}" : $"名称: {OutOT.Text}{n}性别: {OutGender.Text}{n}表里ID: {OutTID.Text}{n}游戏语言: {OutLanguage.Text}{n}游戏版本: {OutVersion.Text}";
+            string OutString = IsPS ? $"{OutOT.Text}\t{OutGender.Text}\t{OutTID.Text.Split("-")[1]}\t{OutNID.Text}" : $"名称: {OutOT.Text}{n}性别: {OutGender.Text}{n}表里ID: {OutTID.Text}{n}游戏语言: {OutLanguage.Text}{n}游戏版本: {OutVersion.Text}";
             Clipboard.SetText(OutString);
         }
 
