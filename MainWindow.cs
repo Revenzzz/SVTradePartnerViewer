@@ -1,4 +1,4 @@
-using PKHeX.Core;
+ï»¿using PKHeX.Core;
 using SVTradePartnerViewer.Properties;
 using SVTradePartnerViewer.Structures;
 using SysBot.Base;
@@ -30,7 +30,7 @@ namespace SVTradePartnerViewer
             build = $" (dev-{date:yyyyMMdd})";
 #endif
             var v = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version!;
-            CachedText = "Öì×Ï½»Ò×¶ÔÏó²éÑ¯Æ÷ v" + v.Major + "." + v.Minor + "." + v.Build + build;
+            CachedText = "æœ±ç´«äº¤æ˜“å¯¹è±¡æŸ¥è¯¢å™¨ v" + v.Major + "." + v.Minor + "." + v.Build + build;
             Text = CachedText;
 
             InitializeComponent();
@@ -93,7 +93,7 @@ namespace SVTradePartnerViewer
         private void CopyOutputToClipboard(bool IsPS = false)
         {
             string n = Environment.NewLine;
-            string OutString = IsPS ? $"{OutOT.Text}\t{OutGender.Text}\t{OutTID.Text.Split("-")[1]}\t{OutNID.Text}" : $"Ãû³Æ: {OutOT.Text}{n}ĞÔ±ğ: {OutGender.Text}{n}±íÀïID: {OutTID.Text}{n}ÓÎÏ·ÓïÑÔ: {OutLanguage.Text}{n}ÓÎÏ·°æ±¾: {OutVersion.Text}";
+            string OutString = IsPS ? $"{OutOT.Text}\t{OutGender.Text}\t{OutTID.Text.Split("-")[1]}\t{OutNID.Text}" : $"åç§°: {OutOT.Text}{n}æ€§åˆ«: {OutGender.Text}{n}è¡¨é‡ŒID: {OutTID.Text}{n}æ¸¸æˆè¯­è¨€: {OutLanguage.Text}{n}æ¸¸æˆç‰ˆæœ¬: {OutVersion.Text}";
             Clipboard.SetText(OutString);
         }
 
@@ -104,35 +104,35 @@ namespace SVTradePartnerViewer
             {
                 try
                 {
-                    textLog.Text = CachedText + "ÕıÔÚÁ¬½Ó...";
+                    textLog.Text = CachedText + "æ­£åœ¨è¿æ¥...";
                     var NewText = CachedText;
                     SwitchConnection.Connect();
                     string id = await GetGameID(CancellationToken.None);
-                    textLog.Text = "ÕıÔÚÊ¶±ğÖ÷»úÑµÁ·¼ÒÊı¾İ...";
+                    textLog.Text = "æ­£åœ¨è¯†åˆ«ä¸»æœºè®­ç»ƒå®¶æ•°æ®...";
                     var sav = await IdentifyTrainer(CancellationToken.None);
                     OT = sav.OT;
                     DisplayTID = sav.DisplayTID;
                     DisplaySID = sav.DisplaySID;
                     if (id is ScarletID)
                     {
-                        Text = CachedText + $" | {OT} ({DisplayTID:D6})ÒÑÁ¬½Ó-ÓÎÏ·°æ±¾£ºÖì";
-                        NewText = CachedText + " - Öì";
+                        Text = CachedText + $" | {OT} ({DisplayTID:D6})å·²è¿æ¥-æ¸¸æˆç‰ˆæœ¬ï¼šæœ±";
+                        NewText = CachedText + " - æœ±";
                     }
                     else if (id is VioletID)
                     {
-                        Text = CachedText + $" | {OT} ({DisplayTID:D6})ÒÑÁ¬½Ó-ÓÎÏ·°æ±¾£º×Ï";
-                        NewText = CachedText + " - ×Ï";
+                        Text = CachedText + $" | {OT} ({DisplayTID:D6})å·²è¿æ¥-æ¸¸æˆç‰ˆæœ¬ï¼šç´«";
+                        NewText = CachedText + " - ç´«";
                     }
                     else
                     {
-                        MessageBox.Show("Ã»ÓĞ¼ì²âµ½SwitchÉÏÕıÔÚÔËĞĞ±¦¿ÉÃÎÖì×Ï!");
+                        MessageBox.Show("æ²¡æœ‰æ£€æµ‹åˆ°Switchä¸Šæ­£åœ¨è¿è¡Œå®å¯æ¢¦æœ±ç´«!");
                         SwitchConnection.Disconnect();
                     }
 
                     if (SwitchConnection.Connected)
                     {
-                        NewText += $" | Á¬½Óµ½ {OT} ({DisplayTID:D6})";
-                        textLog.Text = "ÕıÔÚ¶ÁÈ¡½»Ò×¶ÔÏóĞÅÏ¢...";
+                        NewText += $" | è¿æ¥åˆ° {OT} ({DisplayTID:D6})";
+                        textLog.Text = "æ­£åœ¨è¯»å–äº¤æ˜“å¯¹è±¡ä¿¡æ¯...";
 
                         while (!Stop && SwitchConnection.Connected)
                         {
@@ -147,31 +147,47 @@ namespace SVTradePartnerViewer
                             var trader = await GetTradePartnerMyStatus(Trader1MyStatusPointer, CancellationToken.None);
                             if (trader.OT == OT && trader.DisplayTID == DisplayTID && trader.DisplaySID == DisplaySID)
                                 trader = await GetTradePartnerMyStatus(Trader2MyStatusPointer, CancellationToken.None);
+                            string[] languages =
+                            {
+                            "æœªçŸ¥",
+                            "JPN(æ—¥æœ¬èª)",
+                            "ENG(English)",
+                            "FRE(FranÃ§ais)",
+                            "ITA(Italiano)",
+                            "GER(Deutsch)",
+                            "æœªçŸ¥",
+                            "ESP(EspaÃ±ol)",
+                            "KOR(í•œêµ­ì–´)",
+                            "CHS(ç®€ä½“ä¸­æ–‡)",
+                            "CHT(ç¹é«”ä¸­æ–‡)"
+                            };
+
+                            string languageZh = trader.Language >= 0 && trader.Language < languages.Length ? languages[trader.Language] : "æœªçŸ¥";
 
                             OutOT.Text = trader.OT;
                             OutTID.Text = $"({trader.DisplaySID:D4})-{trader.DisplayTID:D6}";
-                            OutVersion.Text = $"{(trader.Game <= 51 ? "Öì" : "×Ï")}";
+                            OutVersion.Text = $"{(trader.Game <= 51 ? "æœ±" : "ç´«")}";
                             OutNID.Text = $"{NID:X16}";
-                            OutGender.Text = $"{(trader.Gender == 0 ? "ÄĞ" : "Å®")}";
-                            OutLanguage.Text = $"{(trader.Language == 10 ? "CHT" : trader.Language == 9 ? "CHS" : trader.Language == 8 ? "KOR" : trader.Language == 7 ? "ESP" : trader.Language == 5 ? "GER" : trader.Language == 4 ? "ITA" : trader.Language == 3 ? "FRE" : trader.Language == 2 ? "ENG" : trader.Language == 1 ? "JPN" : "Î´Öª")}";
+                            OutGender.Text = $"{(trader.Gender == 0 ? "ç”·" : "å¥³")}";
+                            OutLanguage.Text = languageZh;
 
                             if (CheckAutoCopy.Checked) CopyOutputToClipboard(CheckPSWiFi.Checked);
 
                             await ClearTradePartnerNID(TradePartnerNIDOffset, CancellationToken.None);
                         }
 
-                        textLog.Text = $"{OT} ({DisplayTID:D6}) ÒÑ¶Ï¿ªÁ¬½Ó!";
+                        textLog.Text = $"{OT} ({DisplayTID:D6}) å·²æ–­å¼€è¿æ¥!";
                         if (SwitchConnection.Connected) SwitchConnection.Disconnect();
                     }
 
                 }
                 catch (SocketException err)
                 {
-                    textLog.Text = "Á¬½ÓÊ§°Ü!";
+                    textLog.Text = "è¿æ¥å¤±è´¥!";
                     if (SwitchConnection.Connected) await SwitchConnection.SendAsync(SwitchCommand.DetachController(true), CancellationToken.None).ConfigureAwait(false);
                     SwitchConnection.Disconnect();
                     // a bit hacky but it works
-                    if (err.Message.Contains("Î´ÄÜÏìÓ¦") || err.Message.Contains("Ö÷¶¯¾Ü¾ø"))
+                    if (err.Message.Contains("æœªèƒ½å“åº”") || err.Message.Contains("ä¸»åŠ¨æ‹’ç»"))
                     {
                         MessageBox.Show(err.Message);
                     }
@@ -187,7 +203,7 @@ namespace SVTradePartnerViewer
             // Check title so we can warn if mode is incorrect.
             string title = await SwitchConnection.GetTitleID(token).ConfigureAwait(false);
             if (title is not (ScarletID or VioletID))
-                throw new Exception($"{title}²»ÊÇÖì×Ï°æ±¾. ÄãÈ·¶¨´ò¿ªÁË±¦¿ÉÃÎÖì×ÏÂğ?");
+                throw new Exception($"{title}ä¸æ˜¯æœ±ç´«ç‰ˆæœ¬. ä½ ç¡®å®šæ‰“å¼€äº†å®å¯æ¢¦æœ±ç´«å—?");
 
             return await GetFakeTrainerSAV(token).ConfigureAwait(false);
         }
