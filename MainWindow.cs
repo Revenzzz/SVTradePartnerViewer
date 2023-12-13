@@ -166,7 +166,7 @@ namespace SVTradePartnerViewer
 
                             OutOT.Text = trader.OT;
                             OutTID.Text = $"({trader.DisplaySID:D4})-{trader.DisplayTID:D6}";
-                            OutVersion.Text = $"{(trader.Game <= 51 ? "朱" : "紫")}";
+                            OutVersion.Text = $"{(trader.Game <= 50 ? "朱" : "紫")}";
                             OutNID.Text = $"{NID:X16}";
                             OutGender.Text = $"{(trader.Gender == 0 ? "男" : "女")}";
                             OutLanguage.Text = languageZh;
