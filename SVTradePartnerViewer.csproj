@@ -13,6 +13,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Resources\**" />
+    <EmbeddedResource Remove="Resources\**" />
+    <None Remove="Resources\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Costura.Fody" Version="5.7.0">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
@@ -22,7 +28,6 @@
 
   <ItemGroup>
     <Folder Include="deps\" />
-    <Folder Include="Resources\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -2,7 +2,9 @@
 using SVTradePartnerViewer.Properties;
 using SVTradePartnerViewer.Structures;
 using SysBot.Base;
+using System;
 using System.Net.Sockets;
+using System.Security.Cryptography;
 using static SVTradePartnerViewer.Structures.Offsets;
 
 namespace SVTradePartnerViewer
@@ -21,6 +23,20 @@ namespace SVTradePartnerViewer
         readonly string CachedText = string.Empty;
 
         private bool Stop = false;
+        private static readonly string[] languages =
+        {
+        "未知1",
+        "JPN(日本語)",
+        "ENG(English)",
+        "FRE(Français)",
+        "ITA(Italiano)",
+        "GER(Deutsch)",
+        "未知2",
+        "ESP(Español)",
+        "KOR(한국어)",
+        "CHS(简体中文)",
+        "CHT(繁體中文)"
+        };
 
         public MainWindow()
         {
@@ -147,21 +163,7 @@ namespace SVTradePartnerViewer
                             var trader = await GetTradePartnerMyStatus(Trader1MyStatusPointer, CancellationToken.None);
                             if (trader.OT == OT && trader.DisplayTID == DisplayTID && trader.DisplaySID == DisplaySID)
                                 trader = await GetTradePartnerMyStatus(Trader2MyStatusPointer, CancellationToken.None);
-                            string[] languages =
-                            {
-                            "未知",
-                            "JPN(日本語)",
-                            "ENG(English)",
-                            "FRE(Français)",
-                            "ITA(Italiano)",
-                            "GER(Deutsch)",
-                            "未知",
-                            "ESP(Español)",
-                            "KOR(한국어)",
-                            "CHS(简体中文)",
-                            "CHT(繁體中文)"
-                            };
-
+                            
                             string languageZh = trader.Language >= 0 && trader.Language < languages.Length ? languages[trader.Language] : "未知";
 
                             OutOT.Text = trader.OT;
@@ -170,9 +172,8 @@ namespace SVTradePartnerViewer
                             OutNID.Text = $"{NID:X16}";
                             OutGender.Text = $"{(trader.Gender == 0 ? "男" : "女")}";
                             OutLanguage.Text = languageZh;
-
+                            PkmClipboard.Text = $"=Version={trader.Game}\n.OT_Name={trader.OT}\n.OT_Gender={trader.Gender}\n.DisplayTID={trader.DisplayTID:D6}\n.DisplaySID={trader.DisplaySID:D4}\n.Language={trader.Language}\n.IsNicknamed=false\n";
                             if (CheckAutoCopy.Checked) CopyOutputToClipboard(CheckPSWiFi.Checked);
-
                             await ClearTradePartnerNID(TradePartnerNIDOffset, CancellationToken.None);
                         }
 
@@ -235,6 +236,46 @@ namespace SVTradePartnerViewer
         {
             var data = new byte[8];
             await SwitchConnection.WriteBytesAbsoluteAsync(data, offset, token).ConfigureAwait(false);
+        }
+
+        private void PkmClipboard_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void PrintButton_Click(object sender, EventArgs e)
+        {
+            CopyOutput();
+        }
+
+        private void CopyOutput()
+        {
+            string n = Environment.NewLine;
+            string OT_Name = OutOT.Text;
+            int version = OutVersion.Text == "朱" ? 50 : 51;
+            int Gender = OutGender.Text == "男" ? 0 : 1;
+            string TID = "";
+            string SID = "";
+            if (!string.IsNullOrEmpty(OutTID.Text))
+            {
+                TID = OutTID.Text.Split("-")[1];
+                SID = OutTID.Text.Split("-")[0][1..^1];
+            }
+            int Language = GetLanguageCode(OutLanguage.Text);
+            Clipboard.SetText(PkmClipboard.Text);
+            PkmClipboard.Text = $"=Version={version}{n}.OT_Name={OT_Name}{n}.OT_Gender={Gender}{n}.DisplayTID={TID}{n}.DisplaySID={SID}{n}.Language={Language}{n}.IsNicknamed=false";
+        }
+        public static int GetLanguageCode(string language)
+        {
+
+            for (int i = 0; i < languages.Length; i++)
+            {
+                if (languages[i] == language)
+                {
+                    return i;
+                }
+            }
+            return -1; // 如果没有找到匹配的语言，返回 -1 表示未知
         }
     }
 }

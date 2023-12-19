@@ -49,16 +49,17 @@
             ButtonCopy = new Button();
             ButtonStop = new Button();
             textLog = new TextBox();
+            PkmClipboard = new RichTextBox();
+            PrintButton = new Button();
             groupBox1.SuspendLayout();
             SuspendLayout();
             // 
             // InputSwitchIP
             // 
             InputSwitchIP.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            InputSwitchIP.Location = new Point(263, 25);
-            InputSwitchIP.Margin = new Padding(4);
+            InputSwitchIP.Location = new Point(166, 21);
             InputSwitchIP.Name = "InputSwitchIP";
-            InputSwitchIP.Size = new Size(204, 25);
+            InputSwitchIP.Size = new Size(160, 22);
             InputSwitchIP.TabIndex = 0;
             InputSwitchIP.Text = "192.168.0.0";
             InputSwitchIP.TextAlign = HorizontalAlignment.Center;
@@ -66,10 +67,9 @@
             // 
             // ButtonConnect
             // 
-            ButtonConnect.Location = new Point(13, 124);
-            ButtonConnect.Margin = new Padding(4);
+            ButtonConnect.Location = new Point(77, 325);
             ButtonConnect.Name = "ButtonConnect";
-            ButtonConnect.Size = new Size(93, 29);
+            ButtonConnect.Size = new Size(72, 25);
             ButtonConnect.TabIndex = 1;
             ButtonConnect.Text = "读取";
             ButtonConnect.UseVisualStyleBackColor = true;
@@ -91,11 +91,9 @@
             groupBox1.Controls.Add(label3);
             groupBox1.Controls.Add(label2);
             groupBox1.Controls.Add(label1);
-            groupBox1.Location = new Point(114, 86);
-            groupBox1.Margin = new Padding(4);
+            groupBox1.Location = new Point(12, 71);
             groupBox1.Name = "groupBox1";
-            groupBox1.Padding = new Padding(4);
-            groupBox1.Size = new Size(578, 281);
+            groupBox1.Size = new Size(450, 239);
             groupBox1.TabIndex = 2;
             groupBox1.TabStop = false;
             groupBox1.Text = "交易对象信息";
@@ -103,10 +101,9 @@
             // CheckAutoCopy
             // 
             CheckAutoCopy.AutoSize = true;
-            CheckAutoCopy.Location = new Point(112, 223);
-            CheckAutoCopy.Margin = new Padding(4);
+            CheckAutoCopy.Location = new Point(87, 190);
             CheckAutoCopy.Name = "CheckAutoCopy";
-            CheckAutoCopy.Size = new Size(91, 24);
+            CheckAutoCopy.Size = new Size(75, 21);
             CheckAutoCopy.TabIndex = 4;
             CheckAutoCopy.Text = "自动复制";
             CheckAutoCopy.UseVisualStyleBackColor = true;
@@ -114,19 +111,17 @@
             // 
             // OutVersion
             // 
-            OutVersion.Location = new Point(363, 170);
-            OutVersion.Margin = new Padding(4);
+            OutVersion.Location = new Point(282, 144);
             OutVersion.Name = "OutVersion";
-            OutVersion.Size = new Size(170, 27);
+            OutVersion.Size = new Size(133, 23);
             OutVersion.TabIndex = 5;
             // 
             // CheckPSWiFi
             // 
             CheckPSWiFi.AutoSize = true;
-            CheckPSWiFi.Location = new Point(330, 223);
-            CheckPSWiFi.Margin = new Padding(4);
+            CheckPSWiFi.Location = new Point(257, 190);
             CheckPSWiFi.Name = "CheckPSWiFi";
-            CheckPSWiFi.Size = new Size(119, 24);
+            CheckPSWiFi.Size = new Size(97, 21);
             CheckPSWiFi.TabIndex = 5;
             CheckPSWiFi.Text = "PS! WiFi模式";
             CheckPSWiFi.UseVisualStyleBackColor = true;
@@ -135,108 +130,96 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(308, 173);
-            label5.Margin = new Padding(4, 0, 4, 0);
+            label5.Location = new Point(240, 147);
             label5.Name = "label5";
-            label5.Size = new Size(58, 20);
+            label5.Size = new Size(48, 17);
             label5.TabIndex = 8;
             label5.Text = "版 本：";
             // 
             // OutNID
             // 
             OutNID.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            OutNID.Location = new Point(363, 110);
-            OutNID.Margin = new Padding(4);
+            OutNID.Location = new Point(282, 94);
             OutNID.Name = "OutNID";
-            OutNID.Size = new Size(170, 25);
+            OutNID.Size = new Size(133, 22);
             OutNID.TabIndex = 6;
             // 
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(307, 113);
-            label4.Margin = new Padding(4, 0, 4, 0);
+            label4.Location = new Point(239, 96);
             label4.Name = "label4";
-            label4.Size = new Size(59, 20);
+            label4.Size = new Size(51, 17);
             label4.TabIndex = 6;
             label4.Text = "N I D：";
             // 
             // OutTID
             // 
-            OutTID.Location = new Point(363, 50);
-            OutTID.Margin = new Padding(4);
+            OutTID.Location = new Point(282, 42);
             OutTID.Name = "OutTID";
-            OutTID.Size = new Size(170, 27);
+            OutTID.Size = new Size(133, 23);
             OutTID.TabIndex = 4;
             // 
             // OutOT
             // 
-            OutOT.Location = new Point(84, 50);
-            OutOT.Margin = new Padding(4);
+            OutOT.Location = new Point(65, 42);
             OutOT.Name = "OutOT";
-            OutOT.Size = new Size(170, 27);
+            OutOT.Size = new Size(133, 23);
             OutOT.TabIndex = 3;
             // 
             // OutGender
             // 
-            OutGender.Location = new Point(84, 110);
-            OutGender.Margin = new Padding(4);
+            OutGender.Location = new Point(65, 94);
             OutGender.Name = "OutGender";
-            OutGender.Size = new Size(170, 27);
+            OutGender.Size = new Size(133, 23);
             OutGender.TabIndex = 9;
             // 
             // OutLanguage
             // 
-            OutLanguage.Location = new Point(84, 170);
-            OutLanguage.Margin = new Padding(4);
+            OutLanguage.Location = new Point(65, 144);
             OutLanguage.Name = "OutLanguage";
-            OutLanguage.Size = new Size(170, 27);
+            OutLanguage.Size = new Size(133, 23);
             OutLanguage.TabIndex = 10;
             // 
             // label7
             // 
-            label7.Location = new Point(34, 174);
-            label7.Margin = new Padding(4, 0, 4, 0);
+            label7.Location = new Point(26, 148);
             label7.Name = "label7";
-            label7.Size = new Size(58, 20);
+            label7.Size = new Size(45, 17);
             label7.TabIndex = 11;
             label7.Text = "语 言:";
             // 
             // label3
             // 
-            label3.Location = new Point(34, 113);
-            label3.Margin = new Padding(4, 0, 4, 0);
+            label3.Location = new Point(26, 96);
             label3.Name = "label3";
-            label3.Size = new Size(58, 20);
+            label3.Size = new Size(45, 17);
             label3.TabIndex = 12;
             label3.Text = "性 别:";
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(297, 53);
-            label2.Margin = new Padding(4, 0, 4, 0);
+            label2.Location = new Point(231, 45);
             label2.Name = "label2";
-            label2.Size = new Size(69, 20);
+            label2.Size = new Size(57, 17);
             label2.TabIndex = 1;
             label2.Text = "表里ID：";
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(34, 53);
-            label1.Margin = new Padding(4, 0, 4, 0);
+            label1.Location = new Point(26, 45);
             label1.Name = "label1";
-            label1.Size = new Size(58, 20);
+            label1.Size = new Size(48, 17);
             label1.TabIndex = 0;
             label1.Text = "名 称：";
             // 
             // ButtonCopy
             // 
-            ButtonCopy.Location = new Point(13, 252);
-            ButtonCopy.Margin = new Padding(4);
+            ButtonCopy.Location = new Point(294, 325);
             ButtonCopy.Name = "ButtonCopy";
-            ButtonCopy.Size = new Size(93, 30);
+            ButtonCopy.Size = new Size(72, 25);
             ButtonCopy.TabIndex = 2;
             ButtonCopy.Text = "复制信息";
             ButtonCopy.UseVisualStyleBackColor = true;
@@ -245,10 +228,9 @@
             // ButtonStop
             // 
             ButtonStop.Enabled = false;
-            ButtonStop.Location = new Point(13, 162);
-            ButtonStop.Margin = new Padding(4);
+            ButtonStop.Location = new Point(183, 325);
             ButtonStop.Name = "ButtonStop";
-            ButtonStop.Size = new Size(93, 29);
+            ButtonStop.Size = new Size(72, 25);
             ButtonStop.TabIndex = 3;
             ButtonStop.Text = "停止";
             ButtonStop.UseVisualStyleBackColor = true;
@@ -258,19 +240,39 @@
             // 
             textLog.BackColor = SystemColors.Control;
             textLog.BorderStyle = BorderStyle.None;
-            textLog.Location = new Point(208, 58);
-            textLog.Margin = new Padding(4);
+            textLog.Location = new Point(123, 49);
             textLog.Name = "textLog";
             textLog.ScrollBars = ScrollBars.Horizontal;
-            textLog.Size = new Size(312, 20);
+            textLog.Size = new Size(243, 16);
             textLog.TabIndex = 5;
             textLog.TextAlign = HorizontalAlignment.Center;
             // 
+            // PkmClipboard
+            // 
+            PkmClipboard.Location = new Point(468, 12);
+            PkmClipboard.Name = "PkmClipboard";
+            PkmClipboard.Size = new Size(219, 298);
+            PkmClipboard.TabIndex = 6;
+            PkmClipboard.Text = "你还没有连接到对象...";
+            PkmClipboard.TextChanged += PkmClipboard_TextChanged;
+            // 
+            // PrintButton
+            // 
+            PrintButton.Location = new Point(544, 324);
+            PrintButton.Name = "PrintButton";
+            PrintButton.Size = new Size(72, 26);
+            PrintButton.TabIndex = 7;
+            PrintButton.Text = "打印";
+            PrintButton.UseVisualStyleBackColor = true;
+            PrintButton.Click += PrintButton_Click;
+            // 
             // MainWindow
             // 
-            AutoScaleDimensions = new SizeF(9F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(719, 401);
+            ClientSize = new Size(702, 362);
+            Controls.Add(PrintButton);
+            Controls.Add(PkmClipboard);
             Controls.Add(textLog);
             Controls.Add(groupBox1);
             Controls.Add(ButtonCopy);
@@ -278,7 +280,6 @@
             Controls.Add(ButtonStop);
             Controls.Add(ButtonConnect);
             Icon = (Icon)resources.GetObject("$this.Icon");
-            Margin = new Padding(4);
             Name = "MainWindow";
             Load += MainWindow_Load;
             groupBox1.ResumeLayout(false);
@@ -309,5 +310,7 @@
         private Label label7;
         private TextBox textLog;
         private Label label5;
+        private RichTextBox PkmClipboard;
+        private Button PrintButton;
     }
 }
