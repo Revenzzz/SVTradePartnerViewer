@@ -77,6 +77,7 @@ namespace SVTradePartnerViewer
         private void ButtonConnect_Click(object sender, EventArgs e)
         {
             ButtonStop.Enabled = true;
+            PrintButton.Enabled = true;
             Stop = false;
             Connect();
         }
@@ -85,6 +86,7 @@ namespace SVTradePartnerViewer
         {
             Stop = true;
             ButtonStop.Enabled = false;
+            PrintButton.Enabled = false;
         }
 
         private void ButtonCopy_Click(object sender, EventArgs e)
@@ -122,13 +124,21 @@ namespace SVTradePartnerViewer
                 {
                     textLog.Text = CachedText + "正在连接...";
                     var NewText = CachedText;
-                    SwitchConnection.Connect();
+                    try
+                    {
+                        SwitchConnection.Connect();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("连接服务器失败：" + ex.Message);
+                        return;
+                    }
                     string id = await GetGameID(CancellationToken.None);
                     textLog.Text = "正在识别主机训练家数据...";
                     var sav = await IdentifyTrainer(CancellationToken.None);
                     OT = sav.OT;
-                    DisplayTID = sav.DisplayTID;
-                    DisplaySID = sav.DisplaySID;
+                    DisplayTID = (int)sav.DisplayTID;
+                    DisplaySID = (int)sav.DisplaySID;
                     if (id is ScarletID)
                     {
                         Text = CachedText + $" | {OT} ({DisplayTID:D6})已连接-游戏版本：朱";
