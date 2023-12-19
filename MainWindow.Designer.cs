@@ -56,11 +56,7 @@
             // 
             // InputSwitchIP
             // 
-<<<<<<< Updated upstream
             InputSwitchIP.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
-=======
-            InputSwitchIP.Font = new Font("Consolas", 9F);
->>>>>>> Stashed changes
             InputSwitchIP.Location = new Point(166, 21);
             InputSwitchIP.Name = "InputSwitchIP";
             InputSwitchIP.Size = new Size(160, 22);
@@ -142,11 +138,7 @@
             // 
             // OutNID
             // 
-<<<<<<< Updated upstream
             OutNID.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
-=======
-            OutNID.Font = new Font("Consolas", 9F);
->>>>>>> Stashed changes
             OutNID.Location = new Point(282, 94);
             OutNID.Name = "OutNID";
             OutNID.Size = new Size(133, 22);
