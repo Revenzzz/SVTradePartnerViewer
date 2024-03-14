@@ -69,7 +69,7 @@ namespace SVTradePartnerViewer
             if (textBox.Text != "192.168.0.0")
             {
                 Settings.Default.SwitchIP = textBox.Text;
-                Config.IP = textBox.Text;
+                //Config.IP = textBox.Text;
             }
             Settings.Default.Save();
         }
@@ -182,7 +182,7 @@ namespace SVTradePartnerViewer
                             OutNID.Text = $"{NID:X16}";
                             OutGender.Text = $"{(trader.Gender == 0 ? "男" : "女")}";
                             OutLanguage.Text = languageZh;
-                            PkmClipboard.Text = $"=Version={trader.Game}\n.OT_Name={trader.OT}\n.OT_Gender={trader.Gender}\n.DisplayTID={trader.DisplayTID:D6}\n.DisplaySID={trader.DisplaySID:D4}\n.Language={trader.Language}\n.IsNicknamed=false\n";
+                            PkmClipboard.Text = $".Version={trader.Game}\n.OriginalTrainerName={trader.OT}\n.OriginalTrainerGender={trader.Gender}\n.DisplayTID={trader.DisplayTID:D6}\n.DisplaySID={trader.DisplaySID:D4}\n.Language={trader.Language}\n.IsNicknamed=false\n";
                             if (CheckAutoCopy.Checked) CopyOutputToClipboard(CheckPSWiFi.Checked);
                             await ClearTradePartnerNID(TradePartnerNIDOffset, CancellationToken.None);
                         }
@@ -224,7 +224,7 @@ namespace SVTradePartnerViewer
             var sav = new SAV9SV();
             var info = sav.MyStatus;
             var read = await SwitchConnection.PointerPeek(info.Data.Length, MyStatusPointer, token).ConfigureAwait(false);
-            read.CopyTo(info.Data, 0);
+            read.CopyTo(info.Data);
             return sav;
         }
 
@@ -273,7 +273,7 @@ namespace SVTradePartnerViewer
             }
             int Language = GetLanguageCode(OutLanguage.Text);
             Clipboard.SetText(PkmClipboard.Text);
-            PkmClipboard.Text = $"=Version={version}{n}.OT_Name={OT_Name}{n}.OT_Gender={Gender}{n}.DisplayTID={TID}{n}.DisplaySID={SID}{n}.Language={Language}{n}.IsNicknamed=false";
+            PkmClipboard.Text = $".Version={version}{n}.OriginalTrainerName={OT_Name}{n}.OriginalTrainerGender={Gender}{n}.DisplayTID={TID}{n}.DisplaySID={SID}{n}.Language={Language}{n}.IsNicknamed=false";
         }
         public static int GetLanguageCode(string language)
         {
